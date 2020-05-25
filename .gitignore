@@ -126,3 +126,7 @@ dmypy.json
 
 # Ignore IDEA configuration file
 .idea
+
+# The output file of text_encryption.py
+flower_out.bmp
+secret_out.txt
