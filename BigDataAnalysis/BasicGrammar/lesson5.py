@@ -7,8 +7,9 @@ def add_def(a, b):
     return a + b
 
 
-# c = add_def(10,20)
-# print(c)
+c = add_def(10,20)
+print(c)
+
 
 # 1-2默认值参数
 def add_def1(a, d, b=20):
@@ -16,8 +17,8 @@ def add_def1(a, d, b=20):
     return a + b + d
 
 
-c = add_def1(10, 30, 40)
-print(c)
+c1 = add_def1(10, 30, 40)
+print(c1)
 
 
 # 1-3关键字传参
@@ -26,8 +27,8 @@ def add_def2(a, d, b=20):
     return a + b + d
 
 
-c = add_def2(d=10, a=30, b=40)
-print(c)
+c2 = add_def2(d=10, a=30, b=40)
+print(c2)
 
 
 # 1-4可变长度传参--星号元组传参
@@ -38,8 +39,8 @@ def add_def3(a, b, *args):
     return a + b, sum(args)
 
 
-# c = add_def3(10,20,30,40,50,60,70,70)
-print(c)
+c3 = add_def3(10, 20, 30, 40, 50, 60, 70, 70)
+print("c3: ", c3)
 
 
 # 1-5可变长度传参--双星号关键字传参
@@ -50,8 +51,9 @@ def add_def4(a, b, **kwargs):
     return a + b, sum(kwargs.values())
 
 
-# c = add_def4(10,20,x=30,y=40,z=50,w=60,s=70,h=70)
-# print(c)
+c4 = add_def4(10,20,x=30,y=40,z=50,w=60,s=70,h=70)
+print("c4: ", c4)
+
 
 # 1-6混合传参
 def add_def5(a, b, d=50, *args, **kwargs):
@@ -65,21 +67,21 @@ def add_def5(a, b, d=50, *args, **kwargs):
     return a + b, sum(kwargs.values())
 
 
-c = add_def5(10, 20, 30, 40, 506, 80, x=30, y=40, z=50, w=60, s=70, h=70)
-print(c)
+c5 = add_def5(10, 20, 30, 40, 506, 80, x=30, y=40, z=50, w=60, s=70, h=70)
+print("c5: ", c5)
 
 # 2.lambda表达式
 # 2-1  排序方法sort
 l2 = [12, 345, 6789, 100, 32, 97]
 
 l2.sort()  # 按数字大小排序，方法
-l2
+print("l2.sort(): ", l2)
 l2.sort(key=lambda x: str(x))  # 把数字转换为字符串后，排序
-l2
+print("l2.sort(key=lambda x: str(x)): ", l2)
 
 # 2-2 最大值函数
-max(l2)
-max(l2, key=lambda x: str(x)[1])
+print("max(l2): ", max(l2))
+print("max(l2, key=lambda x: str(x)[1]): ", max(l2, key=lambda x: str(x)[1]))
 
 # 2-3 像使用普通函数一样使用
 chu_def = lambda x, y: x / y
@@ -117,7 +119,7 @@ print(random.choice([2, 3, 4, 5, 6, 7]))  # 返回列表中的一个随机数
 
 l3 = [1, 2, 3, 4, 5, 6, 7]
 random.shuffle(l3)  # 将列表打乱顺序
-l3
+print("random.shuffle(l3): ", l3)
 
 random.sample(l3, 3)  # 从列表中，获取指定个数的值，从l3中获取3个值
 
