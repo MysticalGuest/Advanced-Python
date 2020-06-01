@@ -134,3 +134,8 @@ secret_out.txt
 # The output file of encryption_Chinese.py
 out.bmp
 result.txt
+
+# The output file of lesson5.py
+test1.txt
+test2.csv
+test3.csv
