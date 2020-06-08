@@ -145,4 +145,5 @@ arr_file.npy
 arr_file1.npz
 
 # The data file of Numpy/lesson3.py
-.csv
+*.csv
+arr1.txt
