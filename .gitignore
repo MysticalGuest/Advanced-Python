@@ -147,3 +147,6 @@ arr_file1.npz
 # The data file of Numpy/lesson3.py
 *.csv
 arr1.txt
+
+# The output file of Matplotlib/lesson1.py
+*.jpg
