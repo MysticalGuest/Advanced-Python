@@ -140,5 +140,9 @@ test1.txt
 test2.csv
 test3.csv
 
+# The output file of Numpy/lesson3.py
+arr_file.npy
+arr_file1.npz
+
 # The data file of Numpy/lesson3.py
 .csv
