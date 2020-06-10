@@ -12,11 +12,11 @@ data = np.arange(0, np.pi * 4, 0.01)
 
 # 2.绘图
 # 2-1  绘制画布
-plt.figure(figsize=(12 ,6) ,dpi = 80)
+plt.figure(figsize=(12, 6), dpi=80)
 
 # 2-2绘图
 plt.plot(data, np.sin(data), c="orange", linewidth=5, alpha=0.5, linestyle="--")
-plt.plot(data, np.cos(data), c="#3344aa", linewidth=5, alpha=0.5 , linestyle=":")
+plt.plot(data, np.cos(data), c="#3344aa", linewidth=5, alpha=0.5, linestyle=":")
 
 # 3.添加元素
 # 3-1标题:
