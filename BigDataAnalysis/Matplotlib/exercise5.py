@@ -12,9 +12,9 @@ y = [[2, 6, 5], [4, 7, 8], [9, 8, 3], [2, 3, 5]]
 
 def update(num):
     ax1.clear()
-    color_v = "rbyo"
+    color_v = "rbyg"
     ax1.barh(x, y[num], color=color_v[num])
-    return
+    return ax1,
 
 
 ani = animation.FuncAnimation(fig, update,
