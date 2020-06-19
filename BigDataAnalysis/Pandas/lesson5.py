@@ -5,7 +5,7 @@ import numpy as np
 
 # 5-1 查看DataFrame的基础属性
 df_v3 = pd.read_csv("meal_order_detail1.csv", sep=",", encoding="utf-8")
-df_v5 = pd.read_excel("超市营业额2.xlsx", sheet_name=1)
+df_v5 = pd.read_excel("超市营业额.xlsx", sheet_name=1)
 
 print("df_v5的值属性：values".ljust(30, "="), "\n")
 print(df_v5.values)   # 返回的是一个数组
