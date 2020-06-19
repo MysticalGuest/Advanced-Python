@@ -59,7 +59,7 @@ data_style = pd.to_datetime(data_stamp)
 print(type(data_style))
 
 # 7-5实操与时间相关数据的练习
-data_v1 = pd.read_excel("超市营业额2.xlsx")
+data_v1 = pd.read_excel("超市营业额.xlsx")
 print("data_v1: ", data_v1)
 
 # 查看数据属性
