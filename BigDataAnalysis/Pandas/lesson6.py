@@ -3,7 +3,7 @@
 import numpy as np
 import pandas as pd
 
-df_v5 = pd.read_excel("超市营业额2.xlsx", sheet_name=1)
+df_v5 = pd.read_excel("超市营业额.xlsx", sheet_name=1)
 
 des_v1 = df_v5.loc[:, '交易额']
 print("用numpy函数统计和值如下:\n", np.sum(des_v1))
