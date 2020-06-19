@@ -12,6 +12,6 @@ print("df_v4的原始数据".ljust(30, "="), "\n")
 print(df_v4)
 # 3-2  导入excel文件
 print("df_v5的原始数据".ljust(30, "="), "\n")
-df_v5 = pd.read_excel("超市营业额2.xlsx", sheet_name=1)
+df_v5 = pd.read_excel("超市营业额.xlsx", sheet_name=1)
 print(df_v5)
 
