@@ -144,9 +144,5 @@ test3.csv
 arr_file.npy
 arr_file1.npz
 
-# The data file of Numpy/lesson3.py
-*.csv
-arr1.txt
-
 # The output file of Matplotlib/lesson1.py, and so on...
 *.jpg
