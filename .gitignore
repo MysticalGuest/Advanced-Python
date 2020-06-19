@@ -143,6 +143,7 @@ test3.csv
 # The output file of Numpy/lesson3.py
 arr_file.npy
 arr_file1.npz
+arr1.txt
 
 # The output file of Matplotlib/lesson1.py, and so on...
 *.jpg
