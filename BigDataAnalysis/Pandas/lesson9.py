@@ -1,40 +1,32 @@
+import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 
+# 接lesson10
+# 5.重叠合并--combine_first()
+dict1 = {"id": list(np.arange(1, 6, 1)),
+         'system': ['win10', 'win7', np.nan, 'win8', np.nan],
+         'cup': ['i7', np.nan, 'i5', np.nan, np.nan]}
 
-data_v1 = pd.read_excel("超市营业额.xlsx")
-print("data_v1: \n", data_v1)
-# 数据透视表
-data_piv1 = data_v1.pivot_table(values="交易额", index="日期", columns="柜台", aggfunc="mean").round(2)
-# 绘制散点图
-print("data_piv1: \n", data_piv1)
-print("data_piv1.index: \n", data_piv1.index)
-print("data_piv1.values: \n", data_piv1.values)
-print("data_piv1.columns: \n", data_piv1.columns)
+dict2 = {"id": list(np.arange(1, 6, 1)),
+         'system': ['win10', np.nan, 'win7', 'win8', "win10"],
+         'cup': [np.nan, "i3", 'i5', "i7", "i7"]}
 
-data_piv1.sort_index()
+df9 = pd.DataFrame(dict1)
+df10 = pd.DataFrame(dict2)
+df11 = df9.combine_first(df10)
+print("重叠合并之后的结果:\n", df11)
 
-plt.rcParams['font.sans-serif'] = 'SimHei'
-fig = plt.figure(figsize=(15, 6), dpi=80)
-ax1 = fig.add_subplot(2, 1, 1)
-ax2 = fig.add_subplot(2, 1, 2)
-# x = data_piv1.index
-x_list = []
-[x_list.append(i[6:]) for i in data_piv1.index]
-print("x_list: ", x_list)
-x = x_list
-print("x: ", x)
-y = data_piv1.values
-ax1.plot(x, y[:, 0], 'r--^',
-         x, y[:, 1], 'b-.D',
-         x, y[:, 2], 'g-.D',
-         x, y[:, 3], 'y-.D')
+# 重叠合并2--合并是按照行索引进行的互补
+dict3 = {"0": [np.nan, np.nan, np.nan], "1": [3.0, 4.5, 7.8], "2": [5.0, np.nan, np.nan]}
+dict4 = {"0": [43, 56], "1": [np.nan, 7.8], "2": [6, 5.5]}
+df12 = pd.DataFrame(dict3)
+df13 = pd.DataFrame(dict4, index=[0, 2])
 
-ax2.scatter(x, y[:, 0])
-ax2.scatter(x, y[:, 1])
-plt.legend(data_piv1.columns, loc='upper left')
-plt.show()
+df12.combine_first(df13)
+print("df12：\n", df12)
 
-data_piv2 = pd.crosstab(data_v1["姓名"], data_v1["日期"], data_v1['交易额'], aggfunc="sum")
-print("data_piv2: \n", data_piv2)
+# 数据拆分
+df1 = pd.read_excel('超市营业额.xlsx')
+df1.loc[:, ['工号', '姓名', '交易额']].groupby("姓名")['交易额'].agg(np.mean).round(2)
+print("df1：\n", df1)
 
