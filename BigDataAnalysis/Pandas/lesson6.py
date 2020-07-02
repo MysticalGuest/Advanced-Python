@@ -1,32 +1,54 @@
-# 6.描述性统计
-# 6-1使用numpy函数
-import numpy as np
+# 8.分组聚合
 import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
 
-df_v5 = pd.read_excel("超市营业额.xlsx", sheet_name=1)
 
-des_v1 = df_v5.loc[:, '交易额']
-print("用numpy函数统计和值如下:\n", np.sum(des_v1))
-print("用numpy函数统计\n最大值:{}\n方差:{:.2f}\n标准差:{:.2f}\n均值:{:.2f}\n\n"
-      .format(np.max(des_v1), np.var(des_v1), np.std(des_v1), np.mean(des_v1)))
+data_v1 = pd.read_excel("超市营业额.xlsx")
 
-# 6-2使用pandas的方法
-des_v2 = df_v5.loc[:,'交易额']
-print("用pandas的方法进行统计:\n最大值:{}\n方差:{:.2f}\n标准差:{:.2f}\n均值:{:.2f}\n\n"
-      .format(des_v2.max(), des_v2.var(), des_v2.std(), des_v2.mean()))
+data_group1 = data_v1.groupby(by="姓名")
+print("分组后得到的分组对象\n", data_group1)
 
-# 6-3使用pandas的描述性统计函数
-print("des_v2.describe(): ", des_v2.describe())    # 使用函数
+print("分组中每一组的大小\n", data_group1.size()) # 使用size方法
 
-# 对非数值数据进行出现的次数统计
-df_v5["柜台"].value_counts()
+print("查看每个分组中的前5个值\n", data_group1.head(4))  # 查看分组的前n个值
 
-# 统计一共有多个种类,出现次数最多的种类,最多的次数是多少?
-# 将数据类型转换位category类型,然后进行统计
-df_v5["柜台"] = df_v5['柜台'].astype("category")
-print("df_v5[\"柜台\"].describe(): ", df_v5["柜台"].describe())
+# 8-1 对分组进行聚合
+print("查看每一组交易额之和\n,", data_group1["交易额"].sum())
+print("查看每一组交易额均值\n,", data_group1["交易额"].mean().round(2))
 
-print("df_v5.dtypes: ", df_v5.dtypes)
+data_group2 = data_v1.groupby(by="日期")
+data_group2.size()
+print("一周中每天的交易额分析：", data_group2["交易额"].sum())
 
-print("df_v5[\"柜台\"].value_counts(): \n", df_v5["柜台"].value_counts())
+# 8-2  使用agg方法进行聚合数据:多个函数作用于1个数据
+print(data_group2['交易额'].agg([np.sum, np.mean, np.median]))
+
+# 8-3 练习1，统计各柜台的交易额平均值，和值，标准差
+data_group3 = data_v1.groupby(by="柜台")
+print("各柜台的数据信息:\n", data_group3['交易额'].agg([np.sum, np.mean, np.std]).round(2))
+data_v6 = data_group3['交易额'].agg([np.sum, np.mean, np.std]).round(2)
+print("data_v6: ", data_v6)
+print("data_v6.values: ", data_v6.values)
+print("data_v6.index: ", data_v6.index)
+print("data_v6.columns: ", data_v6.columns)
+
+# 8-4 练习2，统计一周中每天各柜台的均值，和值，标准差
+print("一周中每天各柜台的均值\n", data_v1.groupby(by=["日期", '柜台'])['交易额'].mean())
+
+plt.rcParams['font.sans-serif'] = 'SimHei'
+ax1 = plt.subplot(221)
+ax2 = plt.subplot(222)
+ax3 = plt.subplot(212)
+ax1.plot(data_v6.index, data_v6['sum'])
+ax2.plot(data_v6.index, data_v6['mean'])
+ax3.plot(data_v6.index, data_v6['std'])
+plt.show()
+
+print("data_v6.sort_index(ascending=False): \n", data_v6.sort_index(ascending=False))
+
+print("data_v6.sort_values(by=\"sum\", ascending=False, inplace=False): \n",
+      data_v6.sort_values(by="sum", ascending=False, inplace=False))
+
+print("data_v1.sort_values(by=['日期', '柜台']): \n", data_v1.sort_values(by=['日期', '柜台']))
 
