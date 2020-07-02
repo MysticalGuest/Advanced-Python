@@ -1,122 +1,90 @@
-# 5.DataFrame的操作
+# 7.处理与时间有关的数据
+# 7-1创建日期时间
 import pandas as pd
 import numpy as np
 
 
-# 5-1 查看DataFrame的基础属性
-df_v3 = pd.read_csv("meal_order_detail1.csv", sep=",", encoding="utf-8")
-df_v5 = pd.read_excel("超市营业额.xlsx", sheet_name=1)
+time_v1 = pd.date_range(start="20200501", end="20200601", freq="3D")
+print("创建间隔时间为3天的日期数据：\n", time_v1)
 
-print("df_v5的值属性：values".ljust(30, "="), "\n")
-print(df_v5.values)   # 返回的是一个数组
+time_v2 = pd.date_range(start="20200501010101", periods=12, freq="2H")
+print("创建间隔时间为2小时的时间数据：\n", time_v2)
 
-print("df_v5的列名：columns".ljust(30, "="), "\n")
-print(df_v5.columns)
+time_v3 = pd.date_range(start="20100101", periods=8, freq="Y")
+print("创建间隔时间为1年的日期数据：\n", time_v3)
 
-print("df_v5的行索引：index".ljust(30, "="), "\n")
-print(df_v5.index)
+time_v4 = pd.date_range(start="20100101", periods=8, freq="YS")
+print("创建间隔时间为1年的日期数据：\n", time_v4)
 
-print("df_v5的各列的类型：dtypes".ljust(30, "="), "\n")
-print(df_v5.dtypes)
+time_v5 = pd.date_range(start="20100101", periods=6, freq="2M")
+print("创建间隔时间为2月的日期数据：\n", time_v5)
 
-print("df_v3的形状：shape".ljust(30, "="), "\n")
-print(df_v3.shape)     # 返回的是一个元组
+time_v6 = pd.date_range(start="20100101", periods=6, freq="2MS")
+print("创建间隔时间为2月的日期数据：\n", time_v6)
 
-# ['工号', '姓名', '日期', '时段', '交易额', '柜台'],
+# 7-2日期时间的操作
 
-# 5-2 查数据--方式1：直接用列名查找
-print("用字典方式访问df_v5的数据".ljust(30, "="), "\n")
-print(df_v5['姓名'])     # 用列名方式
-print(df_v5.姓名)       # 把列名当作属性来访问，不建议使用
+pd.set_option('display.unicode.ambiguous_as_wide', True)
+pd.set_option('display.unicode.east_asian_width', True)
 
-print("取df_v5中姓名的前n行".ljust(30, "="), "\n")
-print(df_v5["姓名"][:5])   # 把姓名取出后，相当于一个Series，然后可以用操作数组的方式进行操作
+np.random.seed(40)   # 给定随机数的随机种子
+data_v1 = pd.DataFrame(data=np.random.randint(10, 200, size=(24, 3)),
+                       index=pd.date_range(start="20200501", periods=24, freq="H"),
+                       columns=["西北大学", "外国语大学", "政法大学"])
+print("创建的以时间为索引的DataFrame\n", data_v1)
 
-print("取df_v5中多列的前n行".ljust(30, "="), "\n")
-print(df_v5[["姓名", "交易额"]][:5])   # 把姓名取出后，相当于一个Series，然后可以用操作数组的方式进行操作
+data_v2 = data_v1.resample("5H")
+print("每5个小时取样的结果平均值\n", data_v2.mean())
 
-print("取df_v5中所有列的前n行".ljust(30, "="), "\n")
-print(df_v5[:][:5])   # 把姓名取出后，相当于一个Series，然后可以用操作数组的方式进行操作
+data_v1.index = data_v1.index+pd.Timedelta("2D")
+print("添加2天后data_v1的值\n", data_v1)
 
+data_v1.index = data_v1.index+pd.Timedelta(weeks=2)
+print("添加2天后data_v1的值\n", data_v1)
 
-print("取df_v5中所有列的前n行".ljust(30, "="), "\n")
-print(df_v5[:].head(6))   # 把姓名取出后，相当于一个Series，然后可以用操作数组的方式进行操作
-
-
-print("取df_v5中所有列的后n行".ljust(30, "="), "\n")
-print(df_v5[:].tail(6))   # 把姓名取出后，相当于一个Series，然后可以用操作数组的方式进行操作
-
-
-# ['工号', '姓名', '日期', '时段', '交易额', '柜台'],
-# 5-3 第2中访问方式--用方法操作loc
-print("用loc取df_v5中的姓名值".ljust(30, "="), "\n")
-
-print(df_v5.loc[:, "姓名"])
-
-print("用loc取df_v5中的姓名值".ljust(30, "="), "\n")
-
-print(df_v5.loc[:, ["姓名", "交易额", '柜台']].head())
-
-info_df1 = df_v5.loc[:, ["姓名", "交易额", '柜台']]
-print("用loc取df_v5中交易额大于1400的信息".ljust(30, "="), "\n")
-info_bool = info_df1["交易额"] > 1400    # 交易额大于1400的逻辑值
-# 用逻辑值取数据
-print(info_df1.loc[info_bool, :])
-
-# 5-4 第2中访问方式--用方法操作iloc
-print("用iloc取df_v5中的姓名值".ljust(30, "="), "\n")
-# ['工号', '姓名', '日期', '时段', '交易额', '柜台'],
-print(df_v5.iloc[:, 1:4])
-
-info_df1 = df_v5.loc[:, ["姓名", "交易额", '柜台']]
-print(info_df1)
-print(info_df1.loc[info_df1["交易额"] > 1400, :])
+# 7-3提取日期时间中的年，月，日，或返回星期名等
+time_v7 = pd.date_range(start="20200501", end="20200601", freq="D")
+print("list(time_v7.weekday): \n", list(time_v7.weekday))  # 0代表星期一
+print(time_v7.weekday_name)
+time_v8 = pd.date_range(start="19990101", periods=30, freq="Y")
+print(time_v8.is_leap_year)
+print("time_v8: \n", time_v8)
 
 
-df_index = df_v5.set_index(np.arange(1, 9, 1))
-print(df_index.iloc[1:5, :])
+# 7-4将字符串日期转换为日期时间
+data_str = "20200601"
+data_stamp = pd.Timestamp("20200601")
+print("data_stamp.to_pydatetime(): \n", data_stamp.to_pydatetime())
+data_style = pd.to_datetime(data_stamp)
+print(type(data_style))
 
-# 查找数据方法loc和iloc的区别
-print("原始数据为：", df_v5)
-# 区别1：区间有区别
-print("用loc取的值\n", df_v5.loc[1:5, ['姓名', '日期', '交易额']])   # loc切片时，左闭，右闭
-print("用iloc取的值:\n", df_v5.iloc[1:5, [1, 2, 4]])    # iloc切片时，左闭，右开
+# 7-5实操与时间相关数据的练习
+data_v1 = pd.read_excel("超市营业额.xlsx")
+print("data_v1: ", data_v1)
 
-# 区别2：loc用的索引本身，而iloc用的是索引位置
+# 查看数据属性
+print("数据值\n", data_v1.values)
+print("数据列名\n", data_v1.columns)
+print("数据形状\n", data_v1.shape)
+print("数据各列的类型\n", data_v1.dtypes)
 
-df_v6 = df_v5.set_index(np.arange(2, 10, 1))
-print("修改索引后的数据:\n", df_v6)
-print("用loc取的值\n", df_v6.loc[2:5, ['姓名', '日期', '交易额']])   # loc切片时，左闭，右闭
-print("用iloc取的值:\n", df_v6.iloc[2:5, [1, 2, 4]])    # iloc切片时，左闭，右开
+# 转换日期相关数据为日期格式
+data_v1['日期'] = pd.to_datetime(data_v1["日期"])
+print("转换日期格式之后的类型为\n", data_v1.dtypes)
 
-# 条件取值
-print("df_v5.loc[df_v5['交易额']>1400, :]: \n", df_v5.loc[df_v5['交易额'] > 1400, :])
-print("df_v5.iloc[(df_v5['交易额']>1400).values, :]: \n", df_v5.iloc[(df_v5['交易额'] > 1400).values, :])
+# 要计算每7天的营业额之和
+data_v2 = data_v1.resample("7D", on="日期").sum()["交易额"]   # 显示的时间是采样周期的开始时间
+print("使用采样周期的开始时间：\n", data_v2)
 
-# 2.改数据
-df_v5.loc[df_v5['交易额'] > 1400, '交易额'] = df_v5.loc[df_v5['交易额'] > 1400, '交易额']-100
+data_v3 = data_v1.resample("7D", on="日期", label="right").sum()["交易额"]   # 显示的时间是采样周期的开始时间
+print("使用采样周期的结束时间：\n", data_v3)
 
-# 3.增加列
-df_v5['记录员'] = "李宇春"
+data_v4 = data_v1.resample("7D", on="日期", label="right").mean()["交易额"].round(2)   # 显示的时间是采样周期的开始时间
+print("使用采样周期的结束时间：\n", data_v4)
 
-# 4.柜台为化妆品的记录员，修改为“王源”
-df_v5.loc[df_v5.柜台 == "化妆品", "记录员"] = "王源"
-print("df_v5: ", df_v5)
-
-# 5.指定位置插入列
-df_v5.insert(2, '性别', ["女" for x in range(8)])
-print("df_v5: ", df_v5)
-
-# 6.插入行
-row_dict = dict(工号=1008, 姓名="刘德华", 性别="男", 日期=None, 时段=None, 交易额=1234, 柜台="食品", 记录员="王源")
-df_v5.append(row_dict, ignore_index=True)
-
-df_v5.loc[2] = [1010, '孙九', '女', '2019-04-01', '14：00-21：00', 1333, '蔬菜水果', '李宇春']
-print("df_v5: \n", df_v5)
-
-# 7.删除列/行
-
-df_v7 = df_v5.drop("性别", axis=1, inplace=False)   # 删除列
-df_v8 = df_v5.drop(4, axis=0, inplace=False)      # 删除行
-print("df_v8: \n", df_v8)
+# 将日期转换为星期名称的形式
+data_v1['日期'] = pd.to_datetime(data_v1['日期'])   # 转换为日期时间格式
+week_v1 = [x.day_name for x in data_v1['日期']]   # 遍历出每个日期的星期名
+data_v1['日期'] = week_v1      # 赋值星期名到日期列
+print("data_v1: \n", data_v1)
 
