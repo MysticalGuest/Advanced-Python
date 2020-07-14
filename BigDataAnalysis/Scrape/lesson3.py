@@ -3,6 +3,7 @@ import json             # 加载json数据分析
 import pandas as pd     # 加载数据分析库
 import time
 
+
 '''
 Covid-19疫情数据爬取
 
@@ -22,7 +23,7 @@ Headers = {'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N)
 # 所有的数据接口：list-total
 AllUrl = "https://c.m.163.com/ug/api/wuhan/app/data/list-total?t=318816974928"
 
-#分地区数据接口：list-by-area-code，得到的是历史数据
+# 分地区数据接口：list-by-area-code，得到的是历史数据
 ProvUrl = 'https://c.m.163.com/ug/api/wuhan/app/data/list-by-area-code?areaCode=610000'
 
 # 2.实时数据爬取
@@ -232,9 +233,9 @@ def get_prov_data(code):
     else:
         print("网页访问不成功。")
 
-prov = get_prov_data('420000')
-save_data(prov,"湖北历史数据")
 
+prov = get_prov_data('420000')
+save_data(prov, "湖北历史数据")
 
 
 # 构造省份代码表，用省名称查找相应的行政代码
