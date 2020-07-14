@@ -107,4 +107,3 @@ r = input("请输入半径：")
 print(int(r) * 3)
 
 print(r"C:\Users\kitty-peter\Desktop")
-
