@@ -64,7 +64,7 @@ y_v2 = [np.int(x) for x in y_v1]    # 将数据类型转换为int类型
 bar = Bar()
 bar.add_xaxis(list(x.values))
 bar.add_yaxis("累计死亡", y_v2)      # 注意y轴的数据类型一定是类型，不能是int64，int32
-bar.add_yaxis("累计确诊", [np.int(x) for x in y1.values])      # 注意y轴的数据类型一定是类型，不能是int64，int32
+bar.add_yaxis("累计确诊", [np.int(x) for x in y2.values])      # 注意y轴的数据类型一定是类型，不能是int64，int32
 bar.set_global_opts(title_opts=opts.TitleOpts(title="累计死亡"))
 
 bar.render_notebook()
