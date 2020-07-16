@@ -5,8 +5,6 @@ def decimal_scale(data):
     data = data / 10 ** np.ceil(np.log10(data.max()))
     return data
 
-
-result
 decimal_scale(result.values[:, 1:])
 
 
@@ -72,6 +70,6 @@ data = page_def(use_url)
 area_v1 = data['data']['areaTree']
 name_dic = {}
 for i in range(len(area_v1)):  # 判断那些国家有children
-    if (area_v1[i]['children']):
+    if area_v1[i]['children']:
         name_dic[data['data']['areaTree'][i]['name']] = i
 print(name_dic)
