@@ -41,9 +41,11 @@ print("new_df: ", new_df)
 time_weekday_df = new_df.groupby(new_df.index).max()
 x = time_weekday_df.index
 y = time_weekday_df.values
-# plt.plot(x,y[:,0])
-# plt.show()
-new_df.loc[new_df.iloc[:,0] ==new_df.iloc[:,0].max(),:]
+plt.plot(x,y[:,0])
+plt.show()
+
+print("new_df.loc[new_df.iloc[:, 0] == new_df.iloc[:, 0].max(), :]: \n",
+      new_df.loc[new_df.iloc[:, 0] == new_df.iloc[:, 0].max(), :])
 
 # 按每天进行分组--将索引转换为天的形式
 new_df.index = new_df.index.day
