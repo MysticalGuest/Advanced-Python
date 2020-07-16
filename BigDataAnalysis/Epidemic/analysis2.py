@@ -49,3 +49,6 @@ y1 = new_df2['死亡率']
 plt.plot(x, y)
 plt.xticks(rotation=30)
 plt.show()
+
+new_df2 = new_df2.sort_values('累计_confirm').tail()
+print("new_df2: \n", new_df2)
