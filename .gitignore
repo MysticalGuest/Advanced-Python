@@ -150,3 +150,5 @@ arr1.txt
 
 # The output file of Matplotlib/lesson3.py
 快餐数据图.png
+*.xls
+*.xlsx
